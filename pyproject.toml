@@ -8,6 +8,7 @@ dependencies = [
 
 [project.optional-dependencies]
 itsdangerous = ["itsdangerous~=2.1"]
+jwt = ["PyJWT~=2.8"]
 
 [build-system]
 requires = ["setuptools", "wheel"]
