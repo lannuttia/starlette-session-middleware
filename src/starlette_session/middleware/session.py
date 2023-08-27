@@ -1,34 +1,29 @@
-import json
 import typing
-from base64 import b64decode, b64encode
 
-import itsdangerous
-from itsdangerous.exc import BadSignature
-
-from starlette.datastructures import MutableHeaders, Secret
+from starlette.datastructures import MutableHeaders
 from starlette.requests import HTTPConnection
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
+
+from starlette_session.middleware.codecbackends.errors import DecodeError
+from starlette_session.middleware.codecbackends.base import CodecBackendInterface
+from starlette_session.middleware.storagebackends.base import StorageBackendInterface
+from starlette_session.middleware.authorizationbackends.base import (
+    AuthorizationBackendInterface,
+)
 
 
 class SessionMiddleware:
     def __init__(
         self,
         app: ASGIApp,
-        secret_key: typing.Union[str, Secret],
-        session_cookie: str = "session",
-        max_age: typing.Optional[int] = 14 * 24 * 60 * 60,  # 14 days, in seconds
-        path: str = "/",
-        same_site: typing.Literal["lax", "strict", "none"] = "lax",
-        https_only: bool = False,
+        codec_backend: CodecBackendInterface,
+        storage_backend: StorageBackendInterface,
+        authorization_backend: AuthorizationBackendInterface,
     ) -> None:
         self.app = app
-        self.signer = itsdangerous.TimestampSigner(str(secret_key))
-        self.session_cookie = session_cookie
-        self.max_age = max_age
-        self.path = path
-        self.security_flags = "httponly; samesite=" + same_site
-        if https_only:  # Secure flag can be used with HTTPS only
-            self.security_flags += "; secure"
+        self.codec_backend = codec_backend
+        self.storage_backend = storage_backend
+        self.authorization_backend = authorization_backend
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if scope["type"] not in ("http", "websocket"):  # pragma: no cover
@@ -38,13 +33,12 @@ class SessionMiddleware:
         connection = HTTPConnection(scope)
         initial_session_was_empty = True
 
-        if self.session_cookie in connection.cookies:
-            data = connection.cookies[self.session_cookie].encode("utf-8")
+        data = self.authorization_backend.get_token(connection)
+        if data is not None:
             try:
-                data = self.signer.unsign(data, max_age=self.max_age)
-                scope["session"] = json.loads(b64decode(data))
+                scope["session"] = self.codec_backend.decode(data)
                 initial_session_was_empty = False
-            except BadSignature:
+            except DecodeError:
                 scope["session"] = {}
         else:
             scope["session"] = {}
@@ -53,28 +47,11 @@ class SessionMiddleware:
             if message["type"] == "http.response.start":
                 if scope["session"]:
                     # We have session data to persist.
-                    data = b64encode(json.dumps(scope["session"]).encode("utf-8"))
-                    data = self.signer.sign(data)
-                    headers = MutableHeaders(scope=message)
-                    header_value = "{session_cookie}={data}; path={path}; {max_age}{security_flags}".format(  # noqa E501
-                        session_cookie=self.session_cookie,
-                        data=data.decode("utf-8"),
-                        path=self.path,
-                        max_age=f"Max-Age={self.max_age}; " if self.max_age else "",
-                        security_flags=self.security_flags,
-                    )
-                    headers.append("Set-Cookie", header_value)
+                    data = self.codec_backend.encode(scope["session"])
+                    self.storage_backend.persist(message, data)
                 elif not initial_session_was_empty:
                     # The session has been cleared.
-                    headers = MutableHeaders(scope=message)
-                    header_value = "{session_cookie}={data}; path={path}; {expires}{security_flags}".format(  # noqa E501
-                        session_cookie=self.session_cookie,
-                        data="null",
-                        path=self.path,
-                        expires="expires=Thu, 01 Jan 1970 00:00:00 GMT; ",
-                        security_flags=self.security_flags,
-                    )
-                    headers.append("Set-Cookie", header_value)
+                    self.storage_backend.clear(message)
             await send(message)
 
         await self.app(scope, receive, send_wrapper)

@@ -2,10 +2,16 @@ import re
 
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
-from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import JSONResponse
 from starlette.routing import Mount, Route
 from starlette.testclient import TestClient
+
+from starlette_session.middleware.session import SessionMiddleware
+from starlette_session.middleware.codecbackends.signer import SignerBackend
+from starlette_session.middleware.storagebackends.cookie import CookieBackend
+from starlette_session.middleware.authorizationbackends.cookie import (
+    CookieAuthorizationBackend,
+)
 
 
 def view_session(request):
@@ -30,7 +36,14 @@ def test_session(test_client_factory):
             Route("/update_session", endpoint=update_session, methods=["POST"]),
             Route("/clear_session", endpoint=clear_session, methods=["POST"]),
         ],
-        middleware=[Middleware(SessionMiddleware, secret_key="example")],
+        middleware=[
+            Middleware(
+                SessionMiddleware,
+                codec_backend=SignerBackend(key="example"),
+                storage_backend=CookieBackend(),
+                authorization_backend=CookieAuthorizationBackend(),
+            )
+        ],
     )
     client = test_client_factory(app)
 
@@ -62,7 +75,14 @@ def test_session_expires(test_client_factory):
             Route("/view_session", endpoint=view_session),
             Route("/update_session", endpoint=update_session, methods=["POST"]),
         ],
-        middleware=[Middleware(SessionMiddleware, secret_key="example", max_age=-1)],
+        middleware=[
+            Middleware(
+                SessionMiddleware,
+                codec_backend=SignerBackend(key="example", max_age=-1),
+                storage_backend=CookieBackend(max_age=-1),
+                authorization_backend=CookieAuthorizationBackend(),
+            )
+        ],
     )
     client = test_client_factory(app)
 
@@ -88,7 +108,12 @@ def test_secure_session(test_client_factory):
             Route("/clear_session", endpoint=clear_session, methods=["POST"]),
         ],
         middleware=[
-            Middleware(SessionMiddleware, secret_key="example", https_only=True)
+            Middleware(
+                SessionMiddleware,
+                codec_backend=SignerBackend(key="example"),
+                storage_backend=CookieBackend(https_only=True),
+                authorization_backend=CookieAuthorizationBackend(),
+            )
         ],
     )
     secure_client = test_client_factory(app, base_url="https://testserver")
@@ -125,7 +150,12 @@ def test_session_cookie_subpath(test_client_factory):
             Route("/update_session", endpoint=update_session, methods=["POST"]),
         ],
         middleware=[
-            Middleware(SessionMiddleware, secret_key="example", path="/second_app")
+            Middleware(
+                SessionMiddleware,
+                codec_backend=SignerBackend(key="example"),
+                storage_backend=CookieBackend(path="/second_app"),
+                authorization_backend=CookieAuthorizationBackend(),
+            )
         ],
     )
     app = Starlette(routes=[Mount("/second_app", app=second_app)])
@@ -145,7 +175,14 @@ def test_invalid_session_cookie(test_client_factory):
             Route("/view_session", endpoint=view_session),
             Route("/update_session", endpoint=update_session, methods=["POST"]),
         ],
-        middleware=[Middleware(SessionMiddleware, secret_key="example")],
+        middleware=[
+            Middleware(
+                SessionMiddleware,
+                codec_backend=SignerBackend(key="example"),
+                storage_backend=CookieBackend(),
+                authorization_backend=CookieAuthorizationBackend(),
+            )
+        ],
     )
     client = test_client_factory(app)
 
@@ -164,7 +201,14 @@ def test_session_cookie(test_client_factory):
             Route("/view_session", endpoint=view_session),
             Route("/update_session", endpoint=update_session, methods=["POST"]),
         ],
-        middleware=[Middleware(SessionMiddleware, secret_key="example", max_age=None)],
+        middleware=[
+            Middleware(
+                SessionMiddleware,
+                codec_backend=SignerBackend(key="example", max_age=None),
+                storage_backend=CookieBackend(max_age=None),
+                authorization_backend=CookieAuthorizationBackend(),
+            )
+        ],
     )
     client: TestClient = test_client_factory(app)
 
