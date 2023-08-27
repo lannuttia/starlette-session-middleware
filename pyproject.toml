@@ -1,6 +1,6 @@
 [project]
 name = "starlette-session-middleware"
-version = "0.0.0.a0"
+version = "0.0.0.a1"
 dependencies = [
     "starlette ~= 0.31",
     "typing_extensions>=3.10.0; python_version < '3.10'",
