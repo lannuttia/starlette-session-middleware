@@ -15,7 +15,11 @@ jobs:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
     steps:
-      # retrieve your distributions here
-
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Build
+        run: |
+          python -m build
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
