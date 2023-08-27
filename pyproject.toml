@@ -1,6 +1,6 @@
 [project]
 name = "starlette-session-middleware"
-version = "0.0.0.a4"
+version = "0.0.0.a5"
 readme = "README.md"
 dependencies = [
     "starlette ~= 0.31",
