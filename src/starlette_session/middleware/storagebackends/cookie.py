@@ -4,7 +4,7 @@ import typing
 from starlette.datastructures import MutableHeaders
 from starlette.types import Message
 
-from starlette_session.middleware.storagebackends.base import StorageBackendInterface
+from starlette_session.middleware.storagebackends import StorageBackendInterface
 
 
 class CookieBackend(StorageBackendInterface):

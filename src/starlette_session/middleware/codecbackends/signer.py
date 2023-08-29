@@ -8,7 +8,7 @@ from itsdangerous.exc import BadSignature
 from starlette.datastructures import Secret
 
 from starlette_session.middleware.codecbackends.errors import DecodeError
-from starlette_session.middleware.codecbackends.base import CodecBackendInterface
+from starlette_session.middleware.codecbackends import CodecBackendInterface
 
 
 class SignerBackend(CodecBackendInterface):

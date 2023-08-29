@@ -4,7 +4,7 @@ import typing
 from starlette.requests import HTTPConnection
 
 
-from starlette_session.middleware.authorizationbackends.base import (
+from starlette_session.middleware.authorizationbackends import (
     AuthorizationBackendInterface,
 )
 

@@ -8,7 +8,7 @@ from starlette.responses import JSONResponse
 from starlette.routing import Mount, Route
 from starlette.testclient import TestClient
 
-from starlette_session.middleware.session import SessionMiddleware
+from starlette_session.middleware import SessionMiddleware
 from starlette_session.middleware.codecbackends.jwt import JwtBackend
 from starlette_session.middleware.codecbackends.signer import SignerBackend
 from starlette_session.middleware.storagebackends.cookie import CookieBackend
