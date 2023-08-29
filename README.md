@@ -1,4 +1,4 @@
-# Starlette Session Middleware &middot; [![Known Vulnerabilities](https://snyk.io/test/github/lannuttia/starlette-session-middleware/badge.svg)](https://snyk.io/test/github/lannuttia/starlette-session-middleware)
+# Starlette Session Middleware &middot; [![codecov](https://codecov.io/github/lannuttia/starlette-session-middleware/graph/badge.svg?token=2FO77C58EP)](https://codecov.io/github/lannuttia/starlette-session-middleware) [![Known Vulnerabilities](https://snyk.io/test/github/lannuttia/starlette-session-middleware/badge.svg)](https://snyk.io/test/github/lannuttia/starlette-session-middleware)
 
 ## Purpose
 The purpose of this project is to provide an enhanced, more flexible ASGI session middleware
