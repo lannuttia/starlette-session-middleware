@@ -1,6 +1,5 @@
 import typing
 
-
 from starlette.datastructures import MutableHeaders
 from starlette.types import Message
 

@@ -1,15 +1,12 @@
 import pytest
-
-
-from starlette.types import Scope
 from starlette.requests import HTTPConnection
+from starlette.types import Scope
 
-
-from starlette_session.middleware.authorizationbackends.cookie import (
-    CookieAuthorizationBackend,
-)
 from starlette_session.middleware.authorizationbackends import (
     AuthorizationBackendInterface,
+)
+from starlette_session.middleware.authorizationbackends.cookie import (
+    CookieAuthorizationBackend,
 )
 
 

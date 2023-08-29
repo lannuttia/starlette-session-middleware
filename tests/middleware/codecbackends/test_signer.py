@@ -1,9 +1,10 @@
-import pytest
 from time import sleep
 
-from starlette_session.middleware.codecbackends.signer import SignerBackend
-from starlette_session.middleware.codecbackends.errors import DecodeError
+import pytest
+
 from starlette_session.middleware.codecbackends import CodecBackendInterface
+from starlette_session.middleware.codecbackends.errors import DecodeError
+from starlette_session.middleware.codecbackends.signer import SignerBackend
 
 
 class TestSignerBackend:

@@ -4,12 +4,12 @@ from starlette.datastructures import MutableHeaders
 from starlette.requests import HTTPConnection
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
-from starlette_session.middleware.codecbackends.errors import DecodeError
-from starlette_session.middleware.codecbackends import CodecBackendInterface
-from starlette_session.middleware.storagebackends import StorageBackendInterface
 from starlette_session.middleware.authorizationbackends import (
     AuthorizationBackendInterface,
 )
+from starlette_session.middleware.codecbackends import CodecBackendInterface
+from starlette_session.middleware.codecbackends.errors import DecodeError
+from starlette_session.middleware.storagebackends import StorageBackendInterface
 
 
 class SessionMiddleware:

@@ -2,11 +2,10 @@ import typing
 
 import jwt
 from jwt.exceptions import InvalidTokenError
-
 from starlette.datastructures import Secret
 
-from starlette_session.middleware.codecbackends.errors import DecodeError
 from starlette_session.middleware.codecbackends import CodecBackendInterface
+from starlette_session.middleware.codecbackends.errors import DecodeError
 
 
 class JwtBackend(CodecBackendInterface):

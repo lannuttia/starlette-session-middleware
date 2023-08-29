@@ -9,15 +9,15 @@ from starlette.routing import Mount, Route
 from starlette.testclient import TestClient
 
 from starlette_session.middleware import SessionMiddleware
-from starlette_session.middleware.codecbackends.jwt import JwtBackend
-from starlette_session.middleware.codecbackends.signer import SignerBackend
-from starlette_session.middleware.storagebackends.cookie import CookieBackend
-from starlette_session.middleware.authorizationbackends.cookie import (
-    CookieAuthorizationBackend,
-)
 from starlette_session.middleware.authorizationbackends.authorizationheader import (
     AuthorizationHeaderAuthorizationBackend,
 )
+from starlette_session.middleware.authorizationbackends.cookie import (
+    CookieAuthorizationBackend,
+)
+from starlette_session.middleware.codecbackends.jwt import JwtBackend
+from starlette_session.middleware.codecbackends.signer import SignerBackend
+from starlette_session.middleware.storagebackends.cookie import CookieBackend
 
 
 def view_session(request):

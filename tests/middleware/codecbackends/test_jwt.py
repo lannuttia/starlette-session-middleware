@@ -1,10 +1,11 @@
-import pytest
-from time import sleep
 from datetime import datetime, timedelta
+from time import sleep
 
-from starlette_session.middleware.codecbackends.jwt import JwtBackend
-from starlette_session.middleware.codecbackends.errors import DecodeError
+import pytest
+
 from starlette_session.middleware.codecbackends import CodecBackendInterface
+from starlette_session.middleware.codecbackends.errors import DecodeError
+from starlette_session.middleware.codecbackends.jwt import JwtBackend
 
 
 class TestJwtBackend:

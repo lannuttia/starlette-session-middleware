@@ -4,11 +4,10 @@ from base64 import b64decode, b64encode
 
 import itsdangerous
 from itsdangerous.exc import BadSignature
-
 from starlette.datastructures import Secret
 
-from starlette_session.middleware.codecbackends.errors import DecodeError
 from starlette_session.middleware.codecbackends import CodecBackendInterface
+from starlette_session.middleware.codecbackends.errors import DecodeError
 
 
 class SignerBackend(CodecBackendInterface):
