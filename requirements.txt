@@ -11,3 +11,4 @@ pytest-xdist ~= 3.3
 pytest-cov ~= 4.0
 pytest ~= 7.1
 -e '.[itsdangerous,jwt]'
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
