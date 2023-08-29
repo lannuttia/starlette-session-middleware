@@ -12,7 +12,8 @@ itsdangerous = ["itsdangerous~=2.1"]
 jwt = ["PyJWT~=2.8"]
 
 [build-system]
-requires = ["setuptools", "wheel", "isort"]
+# setuptools is constrained to >=65.5.1 to avoid https://www.cve.org/CVERecord?id=CVE-2022-40897
+requires = ["setuptools>=65.5.1", "wheel", "isort"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.package-data]
