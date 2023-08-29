@@ -1,4 +1,5 @@
 mypy
+isort
 pre-commit
 bump2version
 build

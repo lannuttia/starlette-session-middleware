@@ -12,7 +12,7 @@ itsdangerous = ["itsdangerous~=2.1"]
 jwt = ["PyJWT~=2.8"]
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools", "wheel", "isort"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.package-data]
