@@ -1,3 +1,4 @@
+import re
 import typing
 
 
@@ -11,13 +12,12 @@ from starlette_session.middleware.authorizationbackends import (
 
 class AuthorizationHeaderAuthorizationBackend(AuthorizationBackendInterface):
     def __init__(self, type: str = "Bearer"):
-        self.type = type
+        self.pattern = re.compile(f"^{type.lower()} (.*)$", re.I)
 
     def get_token(self, connection: HTTPConnection) -> typing.Union[str, None]:
         header = "Authorization"
-        expected_value_prefix = f"{self.type} "
-        if header not in connection.headers or not connection.headers[
-            header
-        ].startswith(expected_value_prefix):
+        if header not in connection.headers:
             return None
-        return str(connection.headers[header].split(expected_value_prefix, 1)[1])
+        value = connection.headers[header]
+        match = self.pattern.match(value)
+        return str(match[1]) if match is not None else None
