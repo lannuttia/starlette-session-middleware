@@ -4,7 +4,7 @@ import pytest
 
 from starlette_session.middleware.storagebackends import StorageBackendInterface
 from starlette.requests import cookie_parser
-from starlette_session.middleware.storagebackends.cookie import CookieBackend
+from starlette_session.middleware.storagebackends.cookie import CookieStorageBackend
 
 
 class CookieBackendKwargs(typing.TypedDict):
@@ -17,11 +17,11 @@ class CookieBackendKwargs(typing.TypedDict):
 
 class TestCookieStorageBackend:
     def test_expected_subclass(self):
-        cookie_backend = CookieBackend()
+        cookie_backend = CookieStorageBackend()
         assert isinstance(cookie_backend, StorageBackendInterface) is True
 
     def test_default_persist(self):
-        cookie_backend = CookieBackend()
+        cookie_backend = CookieStorageBackend()
         value = "somegarbage"
         scope = {"type": "http", "headers": []}
         cookie_backend.persist(scope, value)
@@ -34,7 +34,7 @@ class TestCookieStorageBackend:
         )
 
     def test_default_clear(self):
-        cookie_backend = CookieBackend()
+        cookie_backend = CookieStorageBackend()
         scope = {"type": "http", "headers": []}
         cookie_backend.clear(scope)
         assert scope["type"] == "http"
@@ -386,7 +386,7 @@ class TestCookieStorageBackend:
 
     @pytest.mark.parametrize("kwargs", cookie_backend_kwargs)
     def test_parameterized_persist(self, kwargs: CookieBackendKwargs):
-        cookie_backend = CookieBackend(**kwargs)
+        cookie_backend = CookieStorageBackend(**kwargs)
         value = "somegarbage"
         scope = {"type": "http", "headers": []}
         cookie_backend.persist(scope, value)
@@ -400,7 +400,7 @@ class TestCookieStorageBackend:
 
     @pytest.mark.parametrize("kwargs", cookie_backend_kwargs)
     def test_parameterized_clear(self, kwargs: CookieBackendKwargs):
-        cookie_backend = CookieBackend(**kwargs)
+        cookie_backend = CookieStorageBackend(**kwargs)
         scope = {"type": "http", "headers": []}
         cookie_backend.clear(scope)
         assert scope["type"] == "http"

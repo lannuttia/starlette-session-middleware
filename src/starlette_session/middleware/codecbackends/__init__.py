@@ -20,3 +20,7 @@ class CodecBackendInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def encode(self, value: dict[str, typing.Any]) -> str:
         raise NotImplementedError
+
+
+class DecodeError(Exception):
+    pass

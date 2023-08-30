@@ -15,9 +15,9 @@ from starlette_session.middleware.authorizationbackends.authorizationheader impo
 from starlette_session.middleware.authorizationbackends.cookie import (
     CookieAuthorizationBackend,
 )
-from starlette_session.middleware.codecbackends.jwt import JwtBackend
-from starlette_session.middleware.codecbackends.signer import SignerBackend
-from starlette_session.middleware.storagebackends.cookie import CookieBackend
+from starlette_session.middleware.codecbackends.jwt import JwtCodecBackend
+from starlette_session.middleware.codecbackends.signer import SignerCodecBackend
+from starlette_session.middleware.storagebackends.cookie import CookieStorageBackend
 
 
 def view_session(request):
@@ -46,8 +46,8 @@ class TestJwtBackendWithAuthorizationHeaderAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(),
                     authorization_backend=AuthorizationHeaderAuthorizationBackend(),
                 )
             ],
@@ -103,8 +103,8 @@ class TestJwtBackendWithAuthorizationHeaderAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(),
                     authorization_backend=AuthorizationHeaderAuthorizationBackend(),
                 )
             ],
@@ -135,8 +135,8 @@ class TestJwtBackendWithAuthorizationHeaderAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(),
                     authorization_backend=AuthorizationHeaderAuthorizationBackend(),
                 )
             ],
@@ -175,8 +175,8 @@ class TestJwtBackendWithAuthorizationHeaderAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(path="/second_app"),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(path="/second_app"),
                     authorization_backend=AuthorizationHeaderAuthorizationBackend(),
                 )
             ],
@@ -200,8 +200,8 @@ class TestJwtBackendWithAuthorizationHeaderAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(),
                     authorization_backend=AuthorizationHeaderAuthorizationBackend(),
                 )
             ],
@@ -228,8 +228,8 @@ class TestJwtBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -268,8 +268,8 @@ class TestJwtBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -295,8 +295,8 @@ class TestJwtBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -325,8 +325,8 @@ class TestJwtBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(https_only=True),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(https_only=True),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -366,8 +366,8 @@ class TestJwtBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(path="/second_app"),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(path="/second_app"),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -391,8 +391,8 @@ class TestJwtBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -416,8 +416,8 @@ class TestJwtBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=JwtBackend(key="example", algorithm="HS256"),
-                    storage_backend=CookieBackend(max_age=None),
+                    codec_backend=JwtCodecBackend(key="example", algorithm="HS256"),
+                    storage_backend=CookieStorageBackend(max_age=None),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -447,8 +447,8 @@ class TestSignerBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=SignerBackend(key="example"),
-                    storage_backend=CookieBackend(),
+                    codec_backend=SignerCodecBackend(key="example"),
+                    storage_backend=CookieStorageBackend(),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -485,8 +485,8 @@ class TestSignerBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=SignerBackend(key="example", max_age=-1),
-                    storage_backend=CookieBackend(max_age=-1),
+                    codec_backend=SignerCodecBackend(key="example", max_age=-1),
+                    storage_backend=CookieStorageBackend(max_age=-1),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -516,8 +516,8 @@ class TestSignerBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=SignerBackend(key="example"),
-                    storage_backend=CookieBackend(https_only=True),
+                    codec_backend=SignerCodecBackend(key="example"),
+                    storage_backend=CookieStorageBackend(https_only=True),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -557,8 +557,8 @@ class TestSignerBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=SignerBackend(key="example"),
-                    storage_backend=CookieBackend(path="/second_app"),
+                    codec_backend=SignerCodecBackend(key="example"),
+                    storage_backend=CookieStorageBackend(path="/second_app"),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -582,8 +582,8 @@ class TestSignerBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=SignerBackend(key="example"),
-                    storage_backend=CookieBackend(),
+                    codec_backend=SignerCodecBackend(key="example"),
+                    storage_backend=CookieStorageBackend(),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],
@@ -607,8 +607,8 @@ class TestSignerBackendWithCookieAuthorization:
             middleware=[
                 Middleware(
                     SessionMiddleware,
-                    codec_backend=SignerBackend(key="example", max_age=None),
-                    storage_backend=CookieBackend(max_age=None),
+                    codec_backend=SignerCodecBackend(key="example", max_age=None),
+                    storage_backend=CookieStorageBackend(max_age=None),
                     authorization_backend=CookieAuthorizationBackend(),
                 )
             ],

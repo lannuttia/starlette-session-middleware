@@ -4,11 +4,13 @@ import jwt
 from jwt.exceptions import InvalidTokenError
 from starlette.datastructures import Secret
 
-from starlette_session.middleware.codecbackends import CodecBackendInterface
-from starlette_session.middleware.codecbackends.errors import DecodeError
+from starlette_session.middleware.codecbackends import (
+    CodecBackendInterface,
+    DecodeError,
+)
 
 
-class JwtBackend(CodecBackendInterface):
+class JwtCodecBackend(CodecBackendInterface):
     def __init__(
         self,
         key: typing.Union[str, Secret],

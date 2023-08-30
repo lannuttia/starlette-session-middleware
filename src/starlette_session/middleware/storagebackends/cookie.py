@@ -6,7 +6,7 @@ from starlette.types import Message
 from starlette_session.middleware.storagebackends import StorageBackendInterface
 
 
-class CookieBackend(StorageBackendInterface):
+class CookieStorageBackend(StorageBackendInterface):
     def __init__(
         self,
         max_age: typing.Optional[int] = 14 * 24 * 60 * 60,
