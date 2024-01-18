@@ -183,7 +183,7 @@ class TestJwtBackendWithAuthorizationHeaderAuthorization:
         )
         app = Starlette(routes=[Mount("/second_app", app=second_app)])
         client = test_client_factory(app, base_url="http://testserver/second_app")
-        response = client.post("/second_app/update_session", json={"some": "data"})
+        response = client.post("/update_session", json={"some": "data"})
         assert response.status_code == 200
         cookie = response.headers["set-cookie"]
         cookie_path_match = re.search(r"; path=(\S+);", cookie)
@@ -374,7 +374,7 @@ class TestJwtBackendWithCookieAuthorization:
         )
         app = Starlette(routes=[Mount("/second_app", app=second_app)])
         client = test_client_factory(app, base_url="http://testserver/second_app")
-        response = client.post("/second_app/update_session", json={"some": "data"})
+        response = client.post("/update_session", json={"some": "data"})
         assert response.status_code == 200
         cookie = response.headers["set-cookie"]
         cookie_path_match = re.search(r"; path=(\S+);", cookie)
@@ -565,7 +565,7 @@ class TestSignerBackendWithCookieAuthorization:
         )
         app = Starlette(routes=[Mount("/second_app", app=second_app)])
         client = test_client_factory(app, base_url="http://testserver/second_app")
-        response = client.post("/second_app/update_session", json={"some": "data"})
+        response = client.post("/update_session", json={"some": "data"})
         assert response.status_code == 200
         cookie = response.headers["set-cookie"]
         cookie_path_match = re.search(r"; path=(\S+);", cookie)
