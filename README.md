@@ -15,3 +15,44 @@ pre-commit hooks. This ensures that we reduce unneeded pipeline failures.
 
 You can run the tests by running `python -m pytest -n auto --cov`. This will use pytest-xdist to parallelize the tests and provide a code
 coverage report by using pytest-cov.
+
+## Usage
+
+### FastAPI
+In order to use a JWT persisted with a cookie and passed through a cookie, you would create the middleware as follows.
+```python
+from fastapi import FastAPI
+from starlette_session.middleware import SessionMiddleware
+from starlette_session.middleware.codecbackends.jwt import JwtCodecBackend
+from starlette_session.middleware.storagebackends.cookie import CookieStorageBackend
+from starlette_session.middleware.authorizationbackends.cookie import CookieAuthorizationBackend
+
+
+app = FastAPI()
+
+app.add_middleware(
+    SessionMiddleware,
+    codec_backend=JwtCodecBackend(key="somesuperdupersecurekey")
+    storage_backend=CookieStorageBackend()
+    authorization_backend=CookieAuthorizationBackend()
+)
+```
+
+In order to use a JWT persisted with a cookie and passed through the Authorization header, you would create the middleware as follows.
+```python
+from fastapi import FastAPI
+from starlette_session.middleware import SessionMiddleware
+from starlette_session.middleware.codecbackends.jwt import JwtCodecBackend
+from starlette_session.middleware.storagebackends.cookie import CookieStorageBackend
+from starlette_session.middleware.authorizationbackends.authorizationheader import AuthorizationHeaderAuthorizationBackend
+
+
+app = FastAPI()
+
+app.add_middleware(
+    SessionMiddleware,
+    codec_backend=JwtCodecBackend(key="somesuperdupersecurekey")
+    storage_backend=CookieStorageBackend()
+    authorization_backend=AuthorizationHeaderAuthorizationBackend()
+)
+```
