@@ -64,7 +64,7 @@ class TestJwtBackendWithAuthorizationHeaderAuthorization:
 
         # check cookie max-age
         set_cookie = response.headers["set-cookie"]
-        max_age_matches = re.search(r"; Max-Age=([0-9]+);", set_cookie)
+        max_age_matches = re.search(r"; Max-Age=(\d+);", set_cookie)
         assert max_age_matches is not None
         assert int(max_age_matches[1]) == int(14 * 24 * 3600)
         token = re.search(r"session=([^;]*);", response.headers["set-cookie"])[1]
@@ -246,7 +246,7 @@ class TestJwtBackendWithCookieAuthorization:
 
         # check cookie max-age
         set_cookie = response.headers["set-cookie"]
-        max_age_matches = re.search(r"; Max-Age=([0-9]+);", set_cookie)
+        max_age_matches = re.search(r"; Max-Age=(\d+);", set_cookie)
         assert max_age_matches is not None
         assert int(max_age_matches[1]) == int(14 * 24 * 3600)
 
@@ -463,7 +463,7 @@ class TestSignerBackendWithCookieAuthorization:
 
         # check cookie max-age
         set_cookie = response.headers["set-cookie"]
-        max_age_matches = re.search(r"; Max-Age=([0-9]+);", set_cookie)
+        max_age_matches = re.search(r"; Max-Age=(\d+);", set_cookie)
         assert max_age_matches is not None
         assert int(max_age_matches[1]) == 14 * 24 * 3600
 
