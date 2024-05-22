@@ -3,7 +3,7 @@ isort
 pre-commit
 bump2version
 build
-requests ~= 2.28
+requests ~= 2.32
 httpx ~= 0.24
 trio ~= 0.21
 python-dotenv ~= 1.0
