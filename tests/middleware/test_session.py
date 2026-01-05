@@ -144,7 +144,7 @@ class TestJwtBackendWithAuthorizationHeaderAuthorization:
         client = test_client_factory(app)
 
         now = datetime.now()
-        nbf = datetime.timestamp(now + timedelta(seconds=1))
+        nbf = datetime.timestamp(now + timedelta(seconds=30))
         response = client.post("/update_session", json={"nbf": nbf, "some": "data"})
         assert response.json() == {"session": {"nbf": nbf, "some": "data"}}
         token = re.search(r"session=([^;]*);", response.headers["set-cookie"])[1]
