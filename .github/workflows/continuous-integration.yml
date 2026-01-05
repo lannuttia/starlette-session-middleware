@@ -14,14 +14,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install tox
-        run: |
-          pip install tox
       - name: Run tests with tox
         run: |
           # Convert Python version format for tox (e.g., "3.10" -> "310")
           PYTHON_VERSION_NO_DOT=$(echo "${{ matrix.python-version }}" | tr -d '.')
-          tox run -e py${PYTHON_VERSION_NO_DOT}-test
+          pipx run tox run -e py${PYTHON_VERSION_NO_DOT}-test
       - name: Upload coverage reports to Codecov
         if: matrix.python-version == '3.14' # Only upload coverage once
         uses: codecov/codecov-action@v4
@@ -37,10 +34,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-      - name: Install tox
-        run: |
-          pip install tox
       - name: Run formatting check
-        run: tox run -e format
+        run: pipx run tox run -e format
       - name: Run type checking
-        run: tox run -e type-check
+        run: pipx run tox run -e type-check
