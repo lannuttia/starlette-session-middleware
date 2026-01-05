@@ -19,7 +19,7 @@ jobs:
             3.14
       - name: Run tests with tox
         run: |
-          pipx run tox run -e 'py*-test' --parallel auto
+          pipx run tox run-parallel -e py39-test,py310-test,py311-test,py312-test,py313-test,py314-test
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
         with:
