@@ -5,22 +5,22 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: |
+            3.9
+            3.10
+            3.11
+            3.12
+            3.13
+            3.14
       - name: Run tests with tox
         run: |
-          # Convert Python version format for tox (e.g., "3.10" -> "310")
-          PYTHON_VERSION_NO_DOT=$(echo "${{ matrix.python-version }}" | tr -d '.')
-          pipx run tox run -e py${PYTHON_VERSION_NO_DOT}-test
+          pipx run tox run -e 'py*-test' --parallel auto
       - name: Upload coverage reports to Codecov
-        if: matrix.python-version == '3.14' # Only upload coverage once
         uses: codecov/codecov-action@v4
         with:
           files: ./coverage.xml
