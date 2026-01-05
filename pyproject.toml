@@ -1,6 +1,6 @@
 [project]
 name = "starlette-session-middleware"
-version = "0.1.5"
+version = "0.1.6"
 description = "Enhanced and flexible ASGI session middleware for Starlette applications"
 readme = "README.md"
 license = {text = "MIT"}
