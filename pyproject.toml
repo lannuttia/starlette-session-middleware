@@ -1,11 +1,38 @@
 [project]
 name = "starlette-session-middleware"
 version = "0.1.5"
+description = "Enhanced and flexible ASGI session middleware for Starlette applications"
 readme = "README.md"
+license = {text = "MIT"}
+authors = [
+  {name = "Anthony Lannutti", email = "lannuttia@gmail.com"}
+]
+keywords = ["starlette", "asgi", "session", "middleware", "fastapi", "jwt", "cookie"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Framework :: AsyncIO",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Internet :: WWW/HTTP :: Session",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Typing :: Typed"
+]
 dependencies = [
   "starlette ~= 0.35",
   "typing_extensions>=3.10.0; python_version < '3.10'",
 ]
+
+[project.urls]
+Homepage = "https://github.com/lannuttia/starlette-session-middleware"
+Repository = "https://github.com/lannuttia/starlette-session-middleware"
+Issues = "https://github.com/lannuttia/starlette-session-middleware/issues"
 
 [project.optional-dependencies]
 itsdangerous = ["itsdangerous~=2.1"]
