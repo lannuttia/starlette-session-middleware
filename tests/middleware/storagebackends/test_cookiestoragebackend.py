@@ -1,9 +1,9 @@
 import typing
 
 import pytest
+from starlette.requests import cookie_parser
 
 from starlette_session.middleware.storagebackends import StorageBackendInterface
-from starlette.requests import cookie_parser
 from starlette_session.middleware.storagebackends.cookie import CookieStorageBackend
 
 

@@ -3,18 +3,53 @@ name = "starlette-session-middleware"
 version = "0.1.3"
 readme = "README.md"
 dependencies = [
-    "starlette ~= 0.35",
-    "typing_extensions>=3.10.0; python_version < '3.10'",
+  "starlette ~= 0.35",
+  "typing_extensions>=3.10.0; python_version < '3.10'",
 ]
 
 [project.optional-dependencies]
 itsdangerous = ["itsdangerous~=2.1"]
 jwt = ["PyJWT~=2.8"]
 
+[dependency-groups]
+formatting = ["black", "isort"]
+type-check = ["mypy", { include-group = "testing" }]
+testing = [
+  "pytest ~= 8.3",
+  "pytest-cov ~= 6.1",
+  "pytest-xdist ~= 3.3",
+  "requests ~= 2.32",
+  "httpx ~= 0.24",
+  "trio ~= 0.21",
+  "python-dotenv ~= 1.0",
+  "anyio>=4.4.0",
+  "zipp>=3.19.1",
+  "h11>=0.16.0",
+  "itsdangerous~=2.1",
+  "PyJWT~=2.8",
+]
+development = [
+  { include-group = "type-check" },
+  { include-group = "formatting" },
+  { include-group = "testing" },
+  "pre-commit",
+  "bump2version",
+  "build",
+  "tox ~= 4.0",
+  "setuptools>=78.1.1",
+]
+
 [build-system]
 # setuptools is constrained to >=65.5.1 to avoid https://www.cve.org/CVERecord?id=CVE-2022-40897
 requires = ["setuptools>=65.5.1", "wheel", "isort"]
 build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
 
 [tool.setuptools.package-data]
 "starlette_session.middleware" = ["py.typed"]

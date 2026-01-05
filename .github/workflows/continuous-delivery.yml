@@ -6,24 +6,46 @@ on:
       - v*
 
 jobs:
+  test-release:
+    name: run tests before release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          allow-prereleases: true
+      - name: Install tox
+        run: |
+          pip install tox
+      - name: Run all tests and checks
+        run: |
+          tox run -e format,type-check,test
+
   pypi-publish:
     name: upload release to PyPI
     runs-on: ubuntu-latest
+    needs: test-release
     # Specifying a GitHub environment is optional, but strongly encouraged
     environment: release
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.13
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.14
         uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
-      - name: Install dependencies
+          python-version: "3.14"
+          allow-prereleases: true
+      - name: Install tox
         run: |
-          pip install -r requirements.txt
-      - name: Build
+          pip install tox
+      - name: Install dependencies for build
+        run: |
+          pip install --dependency-groups development
+      - name: Build package
         run: |
           python -m build
       - name: Publish package distributions to PyPI

@@ -7,3 +7,6 @@ __pycache__
 /dist/
 /.coverage
 *.egg-info/
+/.tox/
+/build/
+/coverage.xml

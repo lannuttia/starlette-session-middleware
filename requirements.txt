@@ -1,17 +1,3 @@
-mypy
-isort
-pre-commit
-bump2version
-build
-requests ~= 2.32
-httpx ~= 0.24
-trio ~= 0.21
-python-dotenv ~= 1.0
-pytest-xdist ~= 3.3
-pytest-cov ~= 6.1
-pytest ~= 8.3
--e '.[itsdangerous,jwt]'
-setuptools>=78.1.1 # not directly required, pinned by Snyk to avoid a vulnerability
-anyio>=4.4.0 # not directly required, pinned by Snyk to avoid a vulnerability
-zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
-h11>=0.16.0 # not directly required, pinned by Snyk to avoid a vulnerability
+# Development dependencies using dependency groups
+# Install with: pip install -r requirements.txt --dependency-groups development
+-e .
